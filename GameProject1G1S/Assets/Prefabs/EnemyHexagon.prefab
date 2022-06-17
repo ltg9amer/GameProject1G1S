@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 823493923857844161}
   - component: {fileID: 678191551054112602}
   - component: {fileID: -6031320929563252291}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyHexagon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  damage: 1
 --- !u!60 &-6031320929563252291
 PolygonCollider2D:
   m_ObjectHideFlags: 0

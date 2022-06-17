@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3945013301698263654}
   - component: {fileID: -4310482602115696376}
   - component: {fileID: -8956573513937378170}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyOctagon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  damage: 1
 --- !u!60 &-8956573513937378170
 PolygonCollider2D:
   m_ObjectHideFlags: 0

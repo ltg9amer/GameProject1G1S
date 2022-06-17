@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8604908697886966346}
   - component: {fileID: -7399180572532645551}
   - component: {fileID: 3238858445636758461}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyTriangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  damage: 1
 --- !u!60 &3238858445636758461
 PolygonCollider2D:
   m_ObjectHideFlags: 0

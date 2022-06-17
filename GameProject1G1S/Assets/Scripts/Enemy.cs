@@ -5,14 +5,17 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] private int damage;
     private Vector3 moveDirection;
     private Transform deadPlace;
     private ObjectPooler enemyPooler;
+    private PlayerHP playerHP;
 
     private void Start()
     {
         deadPlace = GameObject.Find("DeadPlace").GetComponent<Transform>();
         enemyPooler = GameObject.Find("EnemySpawner").GetComponent<ObjectPooler>();
+        playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHP>();
     }
 
     private void Update()
@@ -28,6 +31,12 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.name == "DeadPlace")
         {
+            enemyPooler.ReturnObject(gameObject);
+        }
+
+        if (collision.gameObject.layer == 7)
+        {
+            playerHP.TakeDamage(damage);
             enemyPooler.ReturnObject(gameObject);
         }
     }
