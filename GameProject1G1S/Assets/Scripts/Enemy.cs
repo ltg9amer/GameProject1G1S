@@ -7,15 +7,23 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private int damage;
     private Vector3 moveDirection;
-    private Transform deadPlace;
     private ObjectPooler enemyPooler;
     private PlayerHP playerHP;
+    private PlayerMove playerMove;
+    private Transform deadPlace;
 
     private void Start()
     {
-        deadPlace = GameObject.Find("DeadPlace").GetComponent<Transform>();
         enemyPooler = GameObject.Find("EnemySpawner").GetComponent<ObjectPooler>();
         playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHP>();
+        playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
+        deadPlace = GameObject.Find("DeadPlace").GetComponent<Transform>();
+
+        if (playerMove.Stage.name == "Stage1")
+        {
+            moveSpeed = 1;
+            damage = 1;
+        }
     }
 
     private void Update()

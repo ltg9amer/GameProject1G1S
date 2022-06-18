@@ -128,7 +128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageData: {fileID: 11400000, guid: e19b5f13a1de5d443a9eeb9ec9d49c36, type: 2}
   enemyPooler: {fileID: 3243315509505202183}
-  spawnDelay: 1
+  maxSpawnEnemy: 600
+  spawnDelay: 0.5
 --- !u!114 &3243315509505202183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,7 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 2180256860380026189, guid: 56f7cc5b95903ea43973cdaf4d8f1ad5, type: 3}
-  poolSize: 10
+  poolSize: 60
 --- !u!1 &3243315510417557923
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +155,7 @@ GameObject:
   - component: {fileID: 3243315510417557932}
   m_Layer: 0
   m_Name: Stage6
-  m_TagString: Untagged
+  m_TagString: Stage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

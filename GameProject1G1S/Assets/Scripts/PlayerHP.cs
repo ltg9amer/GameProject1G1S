@@ -5,44 +5,42 @@ using UnityEngine;
 public class PlayerHP : MonoBehaviour
 {
     [SerializeField] private int maxHP;
-    private PlayerMoveApeirogon playerMoveApeirogon;
+    private PlayerMove playerMove;
     private int currentHP;
+    private float vertexPositionY;
 
     public int MaxHP => maxHP;
     public int CurrentHP => currentHP;
 
     private void Start()
     {
+        playerMove = GetComponent<PlayerMove>();
         currentHP = maxHP;
-
-        if (gameObject.name == "PlayerApeirogon")
-        {
-            playerMoveApeirogon = GetComponent<PlayerMoveApeirogon>();
-        }
+        vertexPositionY = playerMove.VertexList[0].y;
     }
 
     public void TakeDamage(int damage)
     {
         currentHP -= damage;
 
-        playerMoveApeirogon.AutoPositionList.RemoveAt(0);
-        playerMoveApeirogon.AutoRotationList.RemoveAt(0);
-
-        if (playerMoveApeirogon != null)
+        if (playerMove.Stage.name == "Stage1")
         {
-            if (transform.localEulerAngles.z >= ((float)CurrentHP / MaxHP) * 360)
+            playerMove.VertexList.Insert(0, new Vector3(0, (vertexPositionY - playerMove.VertexList[1].y) * ((float)currentHP / maxHP) + playerMove.VertexList[1].y, 0));
+            playerMove.VertexList.RemoveAt(1);
+        }
+        /*else if (playerMove.Stage.name == "Stage10")
+        {
+            if (transform.localEulerAngles.z >= ((float)currentHP / maxHP) * 360)
             {
-                if (transform.localEulerAngles.z >= (360 - ((float)CurrentHP / MaxHP) * 360) / 2 + ((float)CurrentHP / MaxHP) * 360)
+                if (transform.localEulerAngles.z >= (360 - ((float)currentHP / maxHP) * 360) / 2 + ((float)currentHP / maxHP) * 360)
                 {
-                    transform.position = playerMoveApeirogon.AutoPositionList[playerMoveApeirogon.AutoPositionList.Count - 1];
-                    transform.localEulerAngles = playerMoveApeirogon.AutoRotationList[playerMoveApeirogon.AutoRotationList.Count - 1];
                 }
                 else
                 {
-                    transform.position = playerMoveApeirogon.AutoPositionList[0];
-                    transform.localEulerAngles = playerMoveApeirogon.AutoRotationList[0];
                 }
             }
-        }
+        }*/
+
+        //이 코드 되살릴 예정
     }
 }

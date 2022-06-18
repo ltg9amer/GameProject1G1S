@@ -6,13 +6,23 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private StageData stageData;
     [SerializeField] private ObjectPooler enemyPooler;
+    [SerializeField] private int maxSpawnEnemy;
     [SerializeField] private float spawnDelay;
     private Vector2 spawnPosition;
+    private int currentSpawnEnemy;
     private bool spawnPositionSelector;
 
     private void Start()
     {
         StartCoroutine(SpawnEnemy());
+    }
+
+    private void Update()
+    {
+        if (currentSpawnEnemy == maxSpawnEnemy)
+        {
+            StopAllCoroutines();
+        }
     }
 
     IEnumerator SpawnEnemy()
@@ -24,15 +34,16 @@ public class EnemySpawner : MonoBehaviour
             if (spawnPositionSelector)
             {
                 spawnPosition.x = (Random.value >= 0.5) ? stageData.LimitMax.x : stageData.LimitMin.x;
-                spawnPosition.y = Random.Range((float)stageData.LimitMax.y, (float)stageData.LimitMin.y);
+                spawnPosition.y = Random.Range(stageData.LimitMin.y, stageData.LimitMax.y);
             }
             else if (!spawnPositionSelector)
             {
-                spawnPosition.x = Random.Range((float)stageData.LimitMax.x, (float)stageData.LimitMin.x);
+                spawnPosition.x = Random.Range(stageData.LimitMin.x, stageData.LimitMax.x);
                 spawnPosition.y = (Random.value >= 0.5) ? stageData.LimitMax.y : stageData.LimitMin.y;
             }
 
             enemyPooler.SpawnObject(spawnPosition, Quaternion.identity);
+            currentSpawnEnemy++;
 
             yield return new WaitForSeconds(spawnDelay);
         }

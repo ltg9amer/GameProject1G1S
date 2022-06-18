@@ -46,7 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageData: {fileID: 11400000, guid: e19b5f13a1de5d443a9eeb9ec9d49c36, type: 2}
   enemyPooler: {fileID: 3650490827483844415}
-  spawnDelay: 1
+  maxSpawnEnemy: 1000
+  spawnDelay: 0.1
 --- !u!114 &3650490827483844415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 4668496744771133365, guid: 5880ea11eb6e7c64a8499f7e2aa054be, type: 3}
-  poolSize: 10
+  poolSize: 100
 --- !u!1 &3650490828039484886
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3650490828039484889}
   - component: {fileID: 3650490828039484888}
-  - component: {fileID: 3650490828039484891}
+  - component: {fileID: 4145417340077523359}
   - component: {fileID: 7995279651673715537}
   - component: {fileID: 493813827516737780}
   - component: {fileID: 7748588441950278714}
@@ -147,7 +148,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3650490828039484891
+--- !u!114 &4145417340077523359
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,34 +157,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3650490828039484886}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c874640a147bdfe45bb043bb72e6f154, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d8130e48f451864abe4d6a0fff0d463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoPositionList:
-  - {x: 0, y: 0, z: 0}
-  - {x: 1.1299455, y: 1.6137295, z: 0}
-  - {x: 1.8626716, y: 0.6413693, z: 0}
-  - {x: 1.8839204, y: -0.5759723, z: 0}
-  - {x: 1.1855756, y: -1.5733119, z: 0}
-  - {x: 0.034381215, y: -1.9697, z: 0}
-  - {x: -1.1299455, y: -1.6137295, z: 0}
-  - {x: -1.8626716, y: -0.6413692, z: 0}
-  - {x: -1.8839204, y: 0.5759723, z: 0}
-  - {x: -1.1855756, y: 1.5733119, z: 0}
-  - {x: -0.000000030762454, y: 1.97, z: 0}
-  autoRotationList:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 324.99988}
-  - {x: 0, y: 0, z: 288.9998}
-  - {x: 0, y: 0, z: 252.99976}
-  - {x: 0, y: 0, z: 216.0006}
-  - {x: 0, y: 0, z: 180.00044}
-  - {x: 0, y: 0, z: 144.9993}
-  - {x: 0, y: 0, z: 108.000145}
-  - {x: 0, y: 0, z: 72.00008}
-  - {x: 0, y: 0, z: 36.00004}
-  - {x: 0, y: 0, z: -0.000039807193}
-  moveSpeed: 1
+  vertexList: []
+  moveDelay: 1
 --- !u!114 &7995279651673715537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d199257b0d2f8e46a9e001c1b69f5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 10
+  maxHP: 100
 --- !u!58 &493813827516737780
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -245,7 +223,7 @@ GameObject:
   - component: {fileID: 3650490828572382714}
   m_Layer: 0
   m_Name: Stage10
-  m_TagString: Untagged
+  m_TagString: Stage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
