@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private List<Vector3> vertexList = new List<Vector3>();
     [SerializeField] private float moveDelay;
     private PlayerHP playerHP;
     private GameObject stage;
+    private LineRenderer lineRenderer;
     private int listCnt;
     private float keyTime;
     private float leftMoveSpeed;
     private float rightMoveSpeed;
 
-    public List<Vector3> VertexList => vertexList;
     public GameObject Stage => stage;
 
     private void Start()
     {
         playerHP = GetComponent<PlayerHP>();
         stage = GameObject.FindGameObjectWithTag("Stage");
+        lineRenderer = GameObject.Find("StageDrawer").GetComponent<LineRenderer>();
 
         if (stage.name != "Stage10")
         {
@@ -41,66 +41,122 @@ public class PlayerMove : MonoBehaviour
 
     private void Move()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (playerHP.CurrentHP == playerHP.MaxHP)
         {
-            if (listCnt == 0)
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                listCnt = vertexList.Count - 1;
+                if (listCnt > 0)
+                {
+                    listCnt--;
+                }
+                else
+                {
+                    listCnt = lineRenderer.positionCount - (stage.name != "Stage1" ? 2 : 1);
+                }
             }
-            else
-            {
-                listCnt--;
-            }
-        }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (listCnt < lineRenderer.positionCount - (stage.name != "Stage1" ? 2 : 1))
+                {
+                    listCnt++;
+                }
+                else
+                {
+                    listCnt = 0;
+                }
+            }
+
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+            {
+                keyTime += Time.deltaTime;
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                keyTime = 0;
+            }
+
+            transform.position = new Vector3(lineRenderer.GetPosition(listCnt).y, lineRenderer.GetPosition(listCnt).x, 0);
+        }
+        else
         {
-            if (listCnt == vertexList.Count - 1)
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                listCnt = 0;
+                if (listCnt > 0)
+                {
+                    listCnt--;
+                }
             }
-            else
+
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                listCnt++;
+                if (listCnt < lineRenderer.positionCount - (stage.name != "Stage1" ? 1 : 0))
+                {
+                    listCnt++;
+                }
             }
-        }
 
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
-        {
-            keyTime += Time.deltaTime;
-        }
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+            {
+                keyTime += Time.deltaTime;
+            }
 
-        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            keyTime = 0;
-        }
+            if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                keyTime = 0;
+            }
 
-        transform.position = vertexList[listCnt];
+            transform.position = new Vector3(lineRenderer.GetPosition(listCnt).y, lineRenderer.GetPosition(listCnt).x, 0);
+            //좌표 좌우가 뒤집히는 현상 수정 예정
+            //2번째 타격부터 (0, 0, 0)으로 이동하는 현상 수정 예정
+        }
     }
 
     private void AutoMove()
     {
-        if (Input.GetKey(KeyCode.LeftArrow) && keyTime >= moveDelay)
+        if (playerHP.CurrentHP == playerHP.MaxHP)
         {
-            if (listCnt == 0)
+            if (Input.GetKey(KeyCode.LeftArrow) && keyTime >= moveDelay)
             {
-                listCnt = vertexList.Count - 1;
+                if (listCnt > 0)
+                {
+                    listCnt--;
+                }
+                else
+                {
+                    listCnt = lineRenderer.positionCount - (stage.name != "Stage1" ? 2 : 1);
+                }
             }
-            else
+
+            if (Input.GetKey(KeyCode.RightArrow) && keyTime >= moveDelay)
             {
-                listCnt--;
+                if (listCnt < lineRenderer.positionCount - (stage.name != "Stage1" ? 2 : 1))
+                {
+                    listCnt++;
+                }
+                else
+                {
+                    listCnt = 0;
+                }
             }
         }
-
-        if (Input.GetKey(KeyCode.RightArrow) && keyTime >= moveDelay)
+        else
         {
-            if (listCnt == vertexList.Count - 1)
+            if (Input.GetKey(KeyCode.LeftArrow) && keyTime >= moveDelay)
             {
-                listCnt = 0;
+                if (listCnt > 0)
+                {
+                    listCnt--;
+                }
             }
-            else
+
+            if (Input.GetKey(KeyCode.RightArrow) && keyTime >= moveDelay)
             {
-                listCnt++;
+                if (listCnt < lineRenderer.positionCount - (stage.name != "Stage1" ? 1 : 0))
+                {
+                    listCnt++;
+                }
             }
         }
     }
