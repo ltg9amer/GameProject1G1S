@@ -5,31 +5,49 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float moveDelay;
+    private StageDrawer stageDrawer;
     private PlayerHP playerHP;
-    private GameObject stage;
     private LineRenderer lineRenderer;
+    private List<Vector3> positionList = new List<Vector3>();
     private int listCnt;
     private float keyTime;
     private float leftMoveSpeed;
     private float rightMoveSpeed;
 
-    public GameObject Stage => stage;
+    public List<Vector3> PositionList => positionList;
+    public int ListCnt
+    {
+        get { return listCnt; }
+        set { listCnt = value; }
+    }
+
+    private void Awake()
+    {
+        stageDrawer = GameObject.Find("StageDrawer").GetComponent<StageDrawer>();
+        playerHP = GetComponent<PlayerHP>();
+        lineRenderer = GameObject.Find("StageDrawer").GetComponent<LineRenderer>();
+    }
 
     private void Start()
     {
-        playerHP = GetComponent<PlayerHP>();
-        stage = GameObject.FindGameObjectWithTag("Stage");
-        lineRenderer = GameObject.Find("StageDrawer").GetComponent<LineRenderer>();
-
-        if (stage.name != "Stage10")
+        if (stageDrawer.Vertex != 100)
         {
             InvokeRepeating("AutoMove", 0f, moveDelay);
+        }
+        else
+        {
+            transform.position = new Vector3(lineRenderer.GetPosition(0).y, lineRenderer.GetPosition(0).x, 0);
+        }
+
+        for (int i = 0; i < lineRenderer.positionCount - (stageDrawer.Vertex != 2 ? 1 : 0); i++)
+        {
+            positionList.Add(lineRenderer.GetPosition(i));
         }
     }
 
     private void Update()
     {
-        if (stage.name != "Stage10")
+        if (stageDrawer.Vertex != 100)
         {
             Move();
         }
@@ -45,25 +63,25 @@ public class PlayerMove : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                if (listCnt > 0)
-                {
-                    listCnt--;
-                }
-                else
-                {
-                    listCnt = lineRenderer.positionCount - (stage.name != "Stage1" ? 2 : 1);
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                if (listCnt < lineRenderer.positionCount - (stage.name != "Stage1" ? 2 : 1))
+                if (listCnt < positionList.Count - 1)
                 {
                     listCnt++;
                 }
                 else
                 {
                     listCnt = 0;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (listCnt > 0)
+                {
+                    listCnt--;
+                }
+                else
+                {
+                    listCnt = positionList.Count - 1;
                 }
             }
 
@@ -77,7 +95,7 @@ public class PlayerMove : MonoBehaviour
                 keyTime = 0;
             }
 
-            transform.position = new Vector3(lineRenderer.GetPosition(listCnt).y, lineRenderer.GetPosition(listCnt).x, 0);
+            transform.position = new Vector3(positionList[listCnt].y, positionList[listCnt].x, 0);
         }
         else
         {
@@ -91,7 +109,7 @@ public class PlayerMove : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                if (listCnt < lineRenderer.positionCount - (stage.name != "Stage1" ? 1 : 0))
+                if (listCnt < positionList.Count - 1)
                 {
                     listCnt++;
                 }
@@ -107,9 +125,7 @@ public class PlayerMove : MonoBehaviour
                 keyTime = 0;
             }
 
-            transform.position = new Vector3(lineRenderer.GetPosition(listCnt).y, lineRenderer.GetPosition(listCnt).x, 0);
-            //좌표 좌우가 뒤집히는 현상 수정 예정
-            //2번째 타격부터 (0, 0, 0)으로 이동하는 현상 수정 예정
+            transform.position = new Vector3(-positionList[listCnt].y, positionList[listCnt].x, 0);
         }
     }
 
@@ -119,25 +135,25 @@ public class PlayerMove : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.LeftArrow) && keyTime >= moveDelay)
             {
-                if (listCnt > 0)
-                {
-                    listCnt--;
-                }
-                else
-                {
-                    listCnt = lineRenderer.positionCount - (stage.name != "Stage1" ? 2 : 1);
-                }
-            }
-
-            if (Input.GetKey(KeyCode.RightArrow) && keyTime >= moveDelay)
-            {
-                if (listCnt < lineRenderer.positionCount - (stage.name != "Stage1" ? 2 : 1))
+                if (listCnt < positionList.Count - 1)
                 {
                     listCnt++;
                 }
                 else
                 {
                     listCnt = 0;
+                }
+            }
+
+            if (Input.GetKey(KeyCode.RightArrow) && keyTime >= moveDelay)
+            {
+                if (listCnt > 0)
+                {
+                    listCnt--;
+                }
+                else
+                {
+                    listCnt = positionList.Count - 1;
                 }
             }
         }
@@ -153,7 +169,7 @@ public class PlayerMove : MonoBehaviour
 
             if (Input.GetKey(KeyCode.RightArrow) && keyTime >= moveDelay)
             {
-                if (listCnt < lineRenderer.positionCount - (stage.name != "Stage1" ? 1 : 0))
+                if (listCnt < positionList.Count - 1)
                 {
                     listCnt++;
                 }
@@ -163,12 +179,12 @@ public class PlayerMove : MonoBehaviour
 
     private void MoveApeirogon()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.RotateAround(Vector3.zero, Vector3.forward, leftMoveSpeed);
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.RotateAround(Vector3.zero, Vector3.back, rightMoveSpeed);
         }

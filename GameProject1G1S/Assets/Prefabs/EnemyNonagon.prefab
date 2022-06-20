@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9135481716015973170}
   m_Layer: 8
   m_Name: EnemyNonagon
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba1af6a1b6deda544a3170e2361c5fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
   damage: 8
+  moveSpeed: 8
 --- !u!60 &9135481716015973170
 PolygonCollider2D:
   m_ObjectHideFlags: 0

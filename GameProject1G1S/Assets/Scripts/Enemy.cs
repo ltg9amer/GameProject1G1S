@@ -4,26 +4,18 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed;
     [SerializeField] private int damage;
+    [SerializeField] private float moveSpeed;
     private Vector3 moveDirection;
     private ObjectPooler enemyPooler;
     private PlayerHP playerHP;
-    private PlayerMove playerMove;
     private Transform deadPlace;
 
     private void Start()
     {
         enemyPooler = GameObject.Find("EnemySpawner").GetComponent<ObjectPooler>();
         playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHP>();
-        playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
         deadPlace = GameObject.Find("DeadPlace").GetComponent<Transform>();
-
-        if (playerMove.Stage.name == "Stage1")
-        {
-            moveSpeed = 1;
-            damage = 1;
-        }
     }
 
     private void Update()
