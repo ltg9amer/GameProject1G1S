@@ -20,10 +20,13 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        Move();
+    }
+
+    private void Move()
+    {
         moveDirection = deadPlace.position - transform.position;
-
         moveDirection.Normalize();
-
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }
 
@@ -37,6 +40,11 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.layer == 7)
         {
             playerHP.TakeDamage(damage);
+            enemyPooler.ReturnObject(gameObject);
+        }
+
+        if (collision.gameObject.layer == 9)
+        {
             enemyPooler.ReturnObject(gameObject);
         }
     }

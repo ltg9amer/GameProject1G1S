@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private StageData stageData;
     [SerializeField] private ObjectPooler enemyPooler;
+    [SerializeField] private ObjectPooler bossPooler;
     [SerializeField] private int maxSpawnEnemy;
     [SerializeField] private float spawnDelay;
     private Vector2 spawnPosition;

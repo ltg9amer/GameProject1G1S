@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    [SerializeField] private StageDrawer stageDrawer;
+    [SerializeField] private PlayerHP playerHP;
+    [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private float moveDelay;
-    private StageDrawer stageDrawer;
-    private PlayerHP playerHP;
-    private LineRenderer lineRenderer;
     private List<Vector3> positionList = new List<Vector3>();
     private int listCnt;
-    private float keyTime;
     private float leftMoveSpeed;
     private float rightMoveSpeed;
 
@@ -21,23 +20,9 @@ public class PlayerMove : MonoBehaviour
         set { listCnt = value; }
     }
 
-    private void Awake()
-    {
-        stageDrawer = GameObject.Find("StageDrawer").GetComponent<StageDrawer>();
-        playerHP = GetComponent<PlayerHP>();
-        lineRenderer = GameObject.Find("StageDrawer").GetComponent<LineRenderer>();
-    }
-
     private void Start()
     {
-        if (stageDrawer.Vertex != 100)
-        {
-            InvokeRepeating("AutoMove", 0f, moveDelay);
-        }
-        else
-        {
-            transform.position = new Vector3(lineRenderer.GetPosition(0).y, lineRenderer.GetPosition(0).x, 0);
-        }
+        transform.position = new Vector3(lineRenderer.GetPosition(0).y, lineRenderer.GetPosition(0).x, 0);
 
         for (int i = 0; i < lineRenderer.positionCount - (stageDrawer.Vertex != 2 ? 1 : 0); i++)
         {
@@ -49,7 +34,23 @@ public class PlayerMove : MonoBehaviour
     {
         if (stageDrawer.Vertex != 100)
         {
-            Move();
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                StartCoroutine(LeftMove());
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftArrow))
+            {
+                StopAllCoroutines();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                StartCoroutine(RightMove());
+            }
+            else if (Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                StopAllCoroutines();
+            }
         }
         else
         {
@@ -57,11 +58,11 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void Move()
+    IEnumerator LeftMove()
     {
-        if (playerHP.CurrentHP == playerHP.MaxHP)
+        while (true)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (playerHP.CurrentHP == playerHP.MaxHP)
             {
                 if (listCnt < positionList.Count - 1)
                 {
@@ -71,81 +72,29 @@ public class PlayerMove : MonoBehaviour
                 {
                     listCnt = 0;
                 }
-            }
+                transform.position = new Vector3(positionList[listCnt].y, positionList[listCnt].x, 0);
 
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+                yield return new WaitForSeconds(moveDelay);
+            }
+            else
             {
                 if (listCnt > 0)
                 {
                     listCnt--;
                 }
-                else
-                {
-                    listCnt = positionList.Count - 1;
-                }
-            }
 
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
-            {
-                keyTime += Time.deltaTime;
-            }
+                transform.position = new Vector3(-positionList[listCnt].y, positionList[listCnt].x, 0);
 
-            if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
-            {
-                keyTime = 0;
+                yield return new WaitForSeconds(moveDelay);
             }
-
-            transform.position = new Vector3(positionList[listCnt].y, positionList[listCnt].x, 0);
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                if (listCnt > 0)
-                {
-                    listCnt--;
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                if (listCnt < positionList.Count - 1)
-                {
-                    listCnt++;
-                }
-            }
-
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
-            {
-                keyTime += Time.deltaTime;
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
-            {
-                keyTime = 0;
-            }
-
-            transform.position = new Vector3(-positionList[listCnt].y, positionList[listCnt].x, 0);
         }
     }
 
-    private void AutoMove()
+    IEnumerator RightMove()
     {
-        if (playerHP.CurrentHP == playerHP.MaxHP)
+        while (true)
         {
-            if (Input.GetKey(KeyCode.LeftArrow) && keyTime >= moveDelay)
-            {
-                if (listCnt < positionList.Count - 1)
-                {
-                    listCnt++;
-                }
-                else
-                {
-                    listCnt = 0;
-                }
-            }
-
-            if (Input.GetKey(KeyCode.RightArrow) && keyTime >= moveDelay)
+            if (playerHP.CurrentHP == playerHP.MaxHP)
             {
                 if (listCnt > 0)
                 {
@@ -155,24 +104,21 @@ public class PlayerMove : MonoBehaviour
                 {
                     listCnt = positionList.Count - 1;
                 }
-            }
-        }
-        else
-        {
-            if (Input.GetKey(KeyCode.LeftArrow) && keyTime >= moveDelay)
-            {
-                if (listCnt > 0)
-                {
-                    listCnt--;
-                }
-            }
 
-            if (Input.GetKey(KeyCode.RightArrow) && keyTime >= moveDelay)
+                transform.position = new Vector3(positionList[listCnt].y, positionList[listCnt].x, 0);
+
+                yield return new WaitForSeconds(moveDelay);
+            }
+            else
             {
                 if (listCnt < positionList.Count - 1)
                 {
                     listCnt++;
                 }
+
+                transform.position = new Vector3(-positionList[listCnt].y, positionList[listCnt].x, 0);
+
+                yield return new WaitForSeconds(moveDelay);
             }
         }
     }
@@ -189,13 +135,15 @@ public class PlayerMove : MonoBehaviour
             transform.RotateAround(Vector3.zero, Vector3.back, rightMoveSpeed);
         }
 
-        if (transform.localEulerAngles.z <= 0.001f && ((float)playerHP.CurrentHP / playerHP.MaxHP) * 360 < 360)
+        if (transform.localEulerAngles.z <= 0.001 && playerHP.CurrentHP != playerHP.MaxHP)
         {
             rightMoveSpeed = 0;
+            leftMoveSpeed = moveDelay;
         }
-        else if (transform.localEulerAngles.z >= ((float)playerHP.CurrentHP / playerHP.MaxHP) * 360)
+        else if (transform.localEulerAngles.z >= (float)playerHP.CurrentHP / playerHP.MaxHP * 360)
         {
             leftMoveSpeed = 0;
+            rightMoveSpeed = moveDelay;
         }
         else
         {
