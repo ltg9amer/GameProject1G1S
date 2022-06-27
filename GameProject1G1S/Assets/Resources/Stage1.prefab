@@ -192,7 +192,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.3
 --- !u!50 &7184711928278692383
 Rigidbody2D:
   serializedVersion: 4
@@ -242,69 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageDrawer: {fileID: 4479337196848915559}
   bulletPooler: {fileID: 2502091562975167413}
-  shootingDelay: 0.3
---- !u!1 &9015391795402867817
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9015391795402867816}
-  - component: {fileID: 9015391795402867823}
-  - component: {fileID: 9015391795402867822}
-  m_Layer: 0
-  m_Name: EnemySpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9015391795402867816
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9015391795402867817}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 9015391796516550643}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9015391795402867823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9015391795402867817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c4ef9e7d4fc2cb4a8325b0c9ae56aaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 4668496744771133365, guid: ba8937122ab90524c9ac0c411ce277cd, type: 3}
-  poolSize: 10
---- !u!114 &9015391795402867822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9015391795402867817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f90b8e7030e2645a1d63b305ea5a74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageData: {fileID: 11400000, guid: e19b5f13a1de5d443a9eeb9ec9d49c36, type: 2}
-  enemyPooler: {fileID: 9015391795402867823}
-  maxSpawnEnemy: 100
-  spawnDelay: 0.5
+  shootingDelay: 0.1
 --- !u!1 &9015391796516550604
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,7 +272,6 @@ Transform:
   m_Children:
   - {fileID: 8601256269156125548}
   - {fileID: 5711739792877244873}
-  - {fileID: 9015391795402867816}
   - {fileID: 9015391796582126211}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -372,7 +309,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9015391796516550643}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9015391796582126209
 SpriteRenderer:

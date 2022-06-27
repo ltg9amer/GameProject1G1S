@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -8998739941724204401}
   - component: {fileID: -8549430747159558352}
   - component: {fileID: 2956644406636791183}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: BulletApeirogon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 4f2b4e51aa098764bb8216ff7e1df985, type: 3}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_FlipX: 0

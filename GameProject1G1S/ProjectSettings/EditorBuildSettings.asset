@@ -8,4 +8,28 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/IntroScene.unity
+    guid: 602ef03e78b0caf45bf3cb5bf6eed108
+  - enabled: 1
+    path: Assets/Scenes/StageSelectScene.unity
+    guid: 405f845ab4178bd459923689a72bef14
+  - enabled: 1
+    path: Assets/Scenes/OptionScene.unity
+    guid: ec472a864470fa04dac7e29197533e08
+  - enabled: 1
+    path: Assets/Scenes/HowToPlayScene.unity
+    guid: 708b7c8fa532035429fcf4121900b1b1
+  - enabled: 1
+    path: Assets/Scenes/CreditScene.unity
+    guid: 785826da859976d478faef604aa4f13d
+  - enabled: 1
+    path: Assets/Scenes/PlayScene.unity
+    guid: 095e80d858d28ae4c934dd376bd7425c
+  - enabled: 1
+    path: Assets/Scenes/ClearScene.unity
+    guid: d9e1d8c0d5b395d4d8276a9fcc14fbac
+  - enabled: 1
+    path: Assets/Scenes/GameOverScene.unity
+    guid: 387194d5c23a2dc4eb323875e08ac4c5
   m_configObjects: {}

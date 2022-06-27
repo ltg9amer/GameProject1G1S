@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2446793352167813455}
   - component: {fileID: 8063517050790137093}
   - component: {fileID: -2036084351181135064}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: BulletQuadrilateral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 4ad1a2416fce74348ac028b18181e9d2, type: 3}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_FlipX: 0

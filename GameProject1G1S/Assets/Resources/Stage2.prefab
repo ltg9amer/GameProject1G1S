@@ -153,7 +153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3289756213705637590}
   - component: {fileID: 8464485783912994273}
-  - component: {fileID: 6841670539763826061}
+  - component: {fileID: 4758447011130127989}
   - component: {fileID: 1118303310801571581}
   - component: {fileID: 61766427510043666}
   - component: {fileID: 9120800785376095143}
@@ -176,7 +176,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4270772397508296063}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8464485783912994273
 SpriteRenderer:
@@ -229,7 +229,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &6841670539763826061
+--- !u!60 &4758447011130127989
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -254,104 +254,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.326, y: -0.27133334}
-      - {x: 0.31599998, y: -0.254}
-      - {x: 0.31066665, y: -0.24466667}
-      - {x: 0.30133334, y: -0.22866666}
-      - {x: 0.29333332, y: -0.21466666}
-      - {x: 0.29133332, y: -0.21133333}
-      - {x: 0.28333333, y: -0.19733334}
-      - {x: 0.27133334, y: -0.17666666}
-      - {x: 0.25599998, y: -0.14999999}
-      - {x: 0.254, y: -0.14666666}
-      - {x: 0.24599999, y: -0.13266666}
-      - {x: 0.234, y: -0.111999996}
-      - {x: 0.21866666, y: -0.08533333}
-      - {x: 0.20666666, y: -0.064666666}
-      - {x: 0.19133334, y: -0.038}
-      - {x: 0.18933333, y: -0.034666665}
-      - {x: 0.18133333, y: -0.020666666}
-      - {x: 0.16933334, y: 0}
-      - {x: 0.154, y: 0.026666667}
-      - {x: 0.14466667, y: 0.042666666}
-      - {x: 0.13666667, y: 0.056666665}
-      - {x: 0.132, y: 0.064666666}
-      - {x: 0.122, y: 0.082}
-      - {x: 0.10933333, y: 0.104}
-      - {x: 0.104666665, y: 0.111999996}
-      - {x: 0.09466667, y: 0.12933333}
-      - {x: 0.082, y: 0.15133333}
-      - {x: 0.07733333, y: 0.15933333}
-      - {x: 0.072, y: 0.16866666}
-      - {x: 0.06733333, y: 0.17666666}
-      - {x: 0.05733333, y: 0.19399999}
-      - {x: 0.044666667, y: 0.21599999}
-      - {x: 0.042666666, y: 0.21933334}
-      - {x: 0.034666665, y: 0.23333333}
-      - {x: 0.024666667, y: 0.25066668}
-      - {x: 0.01, y: 0.276}
-      - {x: 0.0053333333, y: 0.284}
-      - {x: 0.0019999999, y: 0.28866667}
-      - {x: -0.0026666666, y: 0.28866667}
-      - {x: -0.007333333, y: 0.28066665}
-      - {x: -0.047333334, y: 0.21133333}
-      - {x: -0.054666664, y: 0.19866666}
-      - {x: -0.06, y: 0.18933333}
-      - {x: -0.064666666, y: 0.18133333}
-      - {x: -0.072, y: 0.16866666}
-      - {x: -0.07733333, y: 0.15933333}
-      - {x: -0.082, y: 0.15133333}
-      - {x: -0.08733333, y: 0.142}
-      - {x: -0.092, y: 0.134}
-      - {x: -0.097333334, y: 0.12466667}
-      - {x: -0.102, y: 0.11666667}
-      - {x: -0.10933333, y: 0.104}
-      - {x: -0.11466666, y: 0.09466667}
-      - {x: -0.119333334, y: 0.086666666}
-      - {x: -0.12466667, y: 0.07733333}
-      - {x: -0.12933333, y: 0.06933333}
-      - {x: -0.13666667, y: 0.056666665}
-      - {x: -0.142, y: 0.047333334}
-      - {x: -0.14666666, y: 0.039333332}
-      - {x: -0.152, y: 0.03}
-      - {x: -0.15666667, y: 0.022}
-      - {x: -0.162, y: 0.012666667}
-      - {x: -0.16666667, y: 0.0046666665}
-      - {x: -0.174, y: -0.007999999}
-      - {x: -0.17933333, y: -0.017333332}
-      - {x: -0.184, y: -0.025333334}
-      - {x: -0.18933333, y: -0.034666665}
-      - {x: -0.19399999, y: -0.042666666}
-      - {x: -0.19933333, y: -0.052}
-      - {x: -0.204, y: -0.06}
-      - {x: -0.21133333, y: -0.07266667}
-      - {x: -0.21666667, y: -0.082}
-      - {x: -0.22133332, y: -0.089999996}
-      - {x: -0.22666666, y: -0.09933333}
-      - {x: -0.23133333, y: -0.10733333}
-      - {x: -0.23866667, y: -0.12}
-      - {x: -0.244, y: -0.12933333}
-      - {x: -0.24866666, y: -0.13733333}
-      - {x: -0.254, y: -0.14666666}
-      - {x: -0.25866666, y: -0.15466666}
-      - {x: -0.264, y: -0.164}
-      - {x: -0.26866665, y: -0.17199999}
-      - {x: -0.276, y: -0.18466666}
-      - {x: -0.28133333, y: -0.19399999}
-      - {x: -0.28599998, y: -0.20199999}
-      - {x: -0.29133332, y: -0.21133333}
-      - {x: -0.296, y: -0.21933334}
-      - {x: -0.30333334, y: -0.232}
-      - {x: -0.30866668, y: -0.24133334}
-      - {x: -0.31333333, y: -0.24933334}
-      - {x: -0.31866667, y: -0.25866666}
-      - {x: -0.32333332, y: -0.26666665}
-      - {x: -0.32866666, y: -0.276}
-      - {x: -0.33333334, y: -0.284}
-      - {x: -0.33333334, y: -0.28866667}
-      - {x: 0.33333334, y: -0.28866667}
-      - {x: 0.33333334, y: -0.28466666}
-      - {x: 0.33066666, y: -0.27933332}
+    - - {x: 0.3333333, y: -0.2886667}
+      - {x: -0.3333333, y: -0.2886667}
+      - {x: 0, y: 0.2886667}
 --- !u!50 &1118303310801571581
 Rigidbody2D:
   serializedVersion: 4
@@ -405,68 +310,6 @@ MonoBehaviour:
   playerHP: {fileID: 61766427510043666}
   lineRenderer: {fileID: 7772886305376148526}
   moveDelay: 0.3
---- !u!1 &7377848812234236567
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7913461040424763070}
-  - component: {fileID: 4044373432168072513}
-  - component: {fileID: 8026547918906988399}
-  m_Layer: 0
-  m_Name: EnemySpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7913461040424763070
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7377848812234236567}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4270772397508296063}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4044373432168072513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7377848812234236567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c4ef9e7d4fc2cb4a8325b0c9ae56aaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 3954453172794722672, guid: e899d85fd8261c4419c98759200f8add, type: 3}
-  poolSize: 10
---- !u!114 &8026547918906988399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7377848812234236567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f90b8e7030e2645a1d63b305ea5a74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageData: {fileID: 11400000, guid: e19b5f13a1de5d443a9eeb9ec9d49c36, type: 2}
-  enemyPooler: {fileID: 4044373432168072513}
-  maxSpawnEnemy: 200
-  spawnDelay: 0.5
 --- !u!1 &8104938789051800902
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +359,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.3
 --- !u!50 &3611568014967132023
 Rigidbody2D:
   serializedVersion: 4
@@ -550,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c4ef9e7d4fc2cb4a8325b0c9ae56aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3679519215300020631, guid: caa0516458e74fb4e95852a378c8c0cc, type: 3}
+  prefab: {fileID: 1408100609952026622, guid: f933fd8db7408994d8784480b7ffc172, type: 3}
   poolSize: 10
 --- !u!114 &5659252672961275395
 MonoBehaviour:
@@ -566,7 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageDrawer: {fileID: 1409202228248366811}
   bulletPooler: {fileID: 6355711872024203753}
-  shootingDelay: 0.3
+  shootingDelay: 0.1
 --- !u!1 &8324069631691577042
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +439,6 @@ Transform:
   m_Children:
   - {fileID: 8155403661206411700}
   - {fileID: 5186565875713365338}
-  - {fileID: 7913461040424763070}
   - {fileID: 3289756213705637590}
   m_Father: {fileID: 0}
   m_RootOrder: 0
