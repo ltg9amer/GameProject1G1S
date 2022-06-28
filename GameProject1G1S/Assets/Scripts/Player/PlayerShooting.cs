@@ -4,23 +4,16 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    [SerializeField] private StageDrawer stageDrawer;
     [SerializeField] private ObjectPooler bulletPooler;
     [SerializeField] private float shootingDelay;
-    private GameObject player;
-
-    private void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))
         {
             StartCoroutine("Shooting");
         }
-        else if (Input.GetKeyUp(KeyCode.Space))
+        else if (Input.GetMouseButtonUp(0))
         {
             StopCoroutine("Shooting");
         }
@@ -31,7 +24,7 @@ public class PlayerShooting : MonoBehaviour
         while (true)
         {
             GameObject bullet = bulletPooler.SpawnObject(transform.position, transform.rotation);
-            bullet.GetComponent<Bullet>().MoveDirection = player.transform.position - transform.position;
+            bullet.GetComponent<Bullet>().MoveDirection = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0) - bullet.transform.position;
             yield return new WaitForSeconds(shootingDelay);
         }
     }

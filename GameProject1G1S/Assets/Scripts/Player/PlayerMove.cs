@@ -30,31 +30,34 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (!(Time.timeScale == 0))
         {
-            StartCoroutine("LeftMove");
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            StopCoroutine("LeftMove");
-        }
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                StartCoroutine("LeftMove");
+            }
+            else if (Input.GetKeyUp(KeyCode.A))
+            {
+                StopCoroutine("LeftMove");
+            }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            StartCoroutine("RightMove");
-        }
-        else if (Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            StopCoroutine("RightMove");
-        }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                StartCoroutine("RightMove");
+            }
+            else if (Input.GetKeyUp(KeyCode.D))
+            {
+                StopCoroutine("RightMove");
+            }
 
-        if (playerHP.CurrentHP == playerHP.MaxHP)
-        {
-            transform.position = new Vector3(positionList[listCnt].y, positionList[listCnt].x, 0);
-        }
-        else
-        {
-            transform.position = new Vector3(-positionList[listCnt].y, positionList[listCnt].x, 0);
+            if (playerHP.CurrentHP == playerHP.MaxHP)
+            {
+                transform.position = new Vector3(positionList[listCnt].y, positionList[listCnt].x, 0);
+            }
+            else
+            {
+                transform.position = new Vector3(-positionList[listCnt].y, positionList[listCnt].x, 0);
+            }
         }
     }
 

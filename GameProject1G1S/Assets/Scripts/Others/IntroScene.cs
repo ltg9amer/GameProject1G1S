@@ -9,13 +9,21 @@ public class IntroScene : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textMenu;
     [SerializeField] private PlayerMove playerMove;
 
+    private void Awake()
+    {
+        if (!AudioManager.Instance.IsPlay)
+        {
+            AudioManager.Instance.PlayNeon();
+        }
+    }
+
     private void Update()
     {
         if (playerMove.ListCnt == 0)
         {
             textMenu.text = "Stage Select";
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !(Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)) && !(Time.timeScale == 0))
             {
                 SceneManager.LoadScene("StageSelectScene");
             }
@@ -24,7 +32,7 @@ public class IntroScene : MonoBehaviour
         {
             textMenu.text = "Quit";
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !(Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)) && !(Time.timeScale == 0))
             {
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
@@ -37,7 +45,7 @@ public class IntroScene : MonoBehaviour
         {
             textMenu.text = "Option";
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !(Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)) && !(Time.timeScale == 0))
             {
                 SceneManager.LoadScene("OptionScene");
             }

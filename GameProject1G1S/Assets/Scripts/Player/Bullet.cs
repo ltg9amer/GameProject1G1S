@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        bulletPooler = GameObject.Find("DeadPlace").GetComponent<ObjectPooler>();
+        bulletPooler = GameObject.FindGameObjectWithTag("Player").GetComponent<ObjectPooler>();
     }
 
     private void Update()
@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour
 
     private void Move()
     {
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        transform.position += moveDirection.normalized * moveSpeed * Time.deltaTime;
     }
 
     private void PositionDestroy()
@@ -43,6 +43,12 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
+            GameManager.Instance.Score++;
+            bulletPooler.ReturnObject(gameObject);
+        }
+        else if (collision.gameObject.layer == 9)
+        {
+            GameManager.Instance.Score += 2;
             bulletPooler.ReturnObject(gameObject);
         }
     }

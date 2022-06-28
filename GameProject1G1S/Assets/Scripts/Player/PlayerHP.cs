@@ -22,14 +22,19 @@ public class PlayerHP : MonoBehaviour
     {
         currentHP -= damage;
 
+        StartCoroutine("OnDamage");
+
         if (currentHP != maxHP - maxHP * (float)damage / maxHP)
         {
             if (playerMove.ListCnt == playerMove.PositionList.Count - 1)
             {
-                playerMove.ListCnt--;
+                playerMove.ListCnt -= damage;
             }
 
-            playerMove.PositionList.RemoveAt(playerMove.PositionList.Count - 1);
+            for (int i = 0; i < damage; i++)
+            {
+                playerMove.PositionList.RemoveAt(playerMove.PositionList.Count - 1);
+            }
         }
         else
         {
@@ -51,6 +56,17 @@ public class PlayerHP : MonoBehaviour
             }
         }
 
-        lineRenderer.positionCount--;
+        lineRenderer.positionCount -= damage;
+    }
+
+    IEnumerator OnDamage()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+
+        yield return new WaitForSeconds(0.1f);
+
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+
+        StopCoroutine("OnDamage");
     }
 }

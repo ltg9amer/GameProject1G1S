@@ -15,27 +15,25 @@ public class OptionScene : MonoBehaviour
         {
             textMenu.text = "Back";
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !(Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)) && !(Time.timeScale == 0))
             {
                 SceneManager.LoadScene("IntroScene");
             }
         }
         else if (playerMove.ListCnt == 1)
         {
-            if (Input.GetKey(KeyCode.Space))
+            textMenu.text = "Volume";
+
+            if (Input.GetKeyDown(KeyCode.Space) && !(Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)) && !(Time.timeScale == 0))
             {
-                textMenu.text = "Coming Soon";
-            }
-            else
-            {
-                textMenu.text = "Volume";
+                SceneManager.LoadScene("VolumeScene");
             }
         }
         else if (playerMove.ListCnt == 2)
         {
             textMenu.text = "How to Play";
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !(Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)) && !(Time.timeScale == 0))
             {
                 SceneManager.LoadScene("HowToPlayScene");
             }
@@ -44,7 +42,7 @@ public class OptionScene : MonoBehaviour
         {
             textMenu.text = "Credit";
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !(Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)) && !(Time.timeScale == 0))
             {
                 SceneManager.LoadScene("CreditScene");
             }

@@ -47,6 +47,8 @@ GameObject:
   - component: {fileID: 210191767219766130}
   - component: {fileID: 3484376127926163305}
   - component: {fileID: 3243315510879836408}
+  - component: {fileID: 3008087407400490810}
+  - component: {fileID: 5473521280678338871}
   m_Layer: 7
   m_Name: PlayerHeptagon
   m_TagString: Player
@@ -204,6 +206,34 @@ MonoBehaviour:
   playerHP: {fileID: 3484376127926163305}
   lineRenderer: {fileID: 7735006777988079006}
   moveDelay: 0.3
+--- !u!114 &3008087407400490810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243315510879836414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee953df8413f154caaf2592e6071a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPooler: {fileID: 5473521280678338871}
+  shootingDelay: 0.1
+--- !u!114 &5473521280678338871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243315510879836414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c4ef9e7d4fc2cb4a8325b0c9ae56aaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4197940446750452379, guid: 2ad4da0d100353747841c854ef7a2e05, type: 3}
+  poolSize: 10
 --- !u!1 &3928093590084478613
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,8 +388,6 @@ GameObject:
   - component: {fileID: 5374787742100081945}
   - component: {fileID: 4916874683992183548}
   - component: {fileID: 159298170233447053}
-  - component: {fileID: 2864362237595239601}
-  - component: {fileID: 4825240671479764490}
   m_Layer: 0
   m_Name: DeadPlace
   m_TagString: Untagged
@@ -418,32 +446,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2864362237595239601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8689796893656058568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c4ef9e7d4fc2cb4a8325b0c9ae56aaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 4197940446750452379, guid: 2ad4da0d100353747841c854ef7a2e05, type: 3}
-  poolSize: 10
---- !u!114 &4825240671479764490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8689796893656058568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ee953df8413f154caaf2592e6071a6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageDrawer: {fileID: 5589044930914083906}
-  bulletPooler: {fileID: 2864362237595239601}
-  shootingDelay: 0.1

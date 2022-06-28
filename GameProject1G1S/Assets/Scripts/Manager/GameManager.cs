@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private StagePooler bossPooler;
     [SerializeField] private TilemapRenderer tilemap;
     [SerializeField] private TextMeshProUGUI textLeftEnemy;
+    [SerializeField] private TextMeshProUGUI textScore;
     [SerializeField] private List<GameObject> stageList = new List<GameObject>();
     private Vector2 spawnPosition;
     private PlayerHP playerHP;
@@ -26,10 +27,13 @@ public class GameManager : MonoBehaviour
     private int currentSpawnBoss;
     private int currentDeadBoss;
     private int maxSpawnBoss;
+    private int score;
     private float spawnDelay;
     private float phaseChangeDelay;
     private bool spawnPositionSelector;
+    private bool isSpawnEnemy;
     private bool isBossPhase;
+    private bool isSpawnBoss;
 
     public int StageNumber
     {
@@ -58,6 +62,11 @@ public class GameManager : MonoBehaviour
     }
     public int MaxSpawnEnemy => maxSpawnEnemy;
     public int MaxSpawnBoss => maxSpawnBoss;
+    public int Score
+    {
+        get { return score; }
+        set { score = value; }
+    }
 
     private void Awake()
     {
@@ -65,6 +74,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        AudioManager.Instance.PlayImpulse();
 
         stageNumber = PlayerPrefs.GetInt("StageNumber", 1);
         stageOpened = PlayerPrefs.GetInt("StageOpened", 1);
@@ -74,23 +85,21 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        maxSpawnEnemy = stageNumber * 100;
+        maxSpawnBoss = stageNumber * 50;
+        score = 0;
+
         if (stageNumber != 10)
         {
-            maxSpawnEnemy = stageNumber * 50;
-            maxSpawnBoss = stageNumber * 25;
-            spawnDelay = 1f;
-            spawnDelay -= spawnDelay * ((float)stageNumber / 10) - 0.1f;
+            spawnDelay = 0.3f;
         }
         else
         {
-            maxSpawnEnemy = stageNumber * 100;
-            maxSpawnBoss = stageNumber * 50;
-            spawnDelay = 1f;
-            spawnDelay -= spawnDelay * ((float)stageNumber / 10) - 0.05f;
+            spawnDelay = 0.1f;
         }
 
         phaseChangeDelay = 1f;
-        StartCoroutine(SpawnEnemy());
+        StartCoroutine("SpawnEnemy");
     }
 
     private void Update()
@@ -104,6 +113,8 @@ public class GameManager : MonoBehaviour
         {
             textLeftEnemy.text = $"Left Boss: {maxSpawnBoss - currentDeadBoss}";
         }
+
+        textScore.text = $"Score: {score}";
 
         ResultScene();
     }
@@ -123,20 +134,47 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetInt("StageOpened", stageOpened);
             }
 
+            PlayerPrefs.SetInt("CurrentScore", score);
+
+            if (score > PlayerPrefs.GetInt($"Stage{stageNumber}HighScore", 0))
+            {
+                PlayerPrefs.SetInt($"Stage{stageNumber}HighScore", score);
+            }
+
             SceneManager.LoadScene("ClearScene");
         }
-        else if (currentDeadBoss <= maxSpawnBoss && playerHP.CurrentHP <= 0)
+        else if (playerHP.CurrentHP <= 0)
         {
             Destroy(currentStage);
             PlayerPrefs.SetInt("StageOpened", stageOpened);
+            PlayerPrefs.SetInt("CurrentScore", score);
+
+            if (score > PlayerPrefs.GetInt($"Stage{stageNumber}HighScore", 0))
+            {
+                PlayerPrefs.SetInt($"Stage{stageNumber}HighScore", score);
+            }
+
             SceneManager.LoadScene("GameOverScene");
         }
     }
 
     IEnumerator SpawnEnemy()
     {
+        isSpawnEnemy = true;
+
         while (true)
         {
+            if (Time.timeScale == 0)
+            {
+                StartCoroutine("Shelter");
+                StopCoroutine("SpawnEnemy");
+            }
+
+            if (currentSpawnEnemy >= maxSpawnEnemy)
+            {
+                break;
+            }
+
             spawnPositionSelector = Random.value >= 0.5;
 
             if (spawnPositionSelector)
@@ -153,29 +191,31 @@ public class GameManager : MonoBehaviour
             enemyPooler.SpawnObject(spawnPosition, Quaternion.identity);
 
             yield return new WaitForSeconds(spawnDelay);
-
-            if (currentSpawnEnemy == maxSpawnEnemy)
-            {
-                break;
-            }
         }
 
         while (true)
         {
-            yield return null;
-
             if (currentDeadEnemy == maxSpawnEnemy)
             {
-                StartCoroutine(BossPhase());
-                break;
+                isSpawnEnemy = false;
+                StartCoroutine("BossPhase");
+                StopCoroutine("SpawnEnemy");
             }
         }
     }
 
     IEnumerator BossPhase()
     {
+        isBossPhase = true;
+
         while (true)
         {
+            if (Time.timeScale == 0)
+            {
+                StartCoroutine("Shelter");
+                StopCoroutine("BossPhase");
+            }
+
             tilemap.sortingOrder = 0;
             textLeftEnemy.text = $"Left Boss: {maxSpawnBoss - currentDeadBoss}";
 
@@ -184,23 +224,39 @@ public class GameManager : MonoBehaviour
             if (phaseChangeDelay > 0)
             {
                 tilemap.sortingOrder = 1;
-                textLeftEnemy.text = $"Left Enemy: {maxSpawnEnemy - currentDeadEnemy}";
+                textLeftEnemy.text = "Left Enemy: 0";
                 yield return new WaitForSeconds(phaseChangeDelay);
                 phaseChangeDelay -= 0.1f;
             }
             else
             {
-                StartCoroutine(SpawnBoss());
-                isBossPhase = true;
-                break;
+                isBossPhase = false;
+                StartCoroutine("SpawnBoss");
+                StopCoroutine("BossPhase");
             }
         }
     }
 
     IEnumerator SpawnBoss()
     {
+        AudioManager.Instance.PlayMetropolis();
+
+        isSpawnBoss = true;
+
         while (true)
         {
+            if (Time.timeScale == 0)
+            {
+                StartCoroutine("Shelter");
+                StopCoroutine("SpawnBoss");
+            }
+
+            if (currentSpawnBoss >= maxSpawnBoss)
+            {
+                isSpawnBoss = false;
+                StopCoroutine("SpawnBoss");
+            }
+
             spawnPositionSelector = Random.value >= 0.5;
 
             if (spawnPositionSelector)
@@ -217,10 +273,29 @@ public class GameManager : MonoBehaviour
             bossPooler.SpawnObject(spawnPosition, Quaternion.identity);
 
             yield return new WaitForSeconds(spawnDelay);
+        }
+    }
 
-            if (currentSpawnBoss == maxSpawnBoss)
+    IEnumerator Shelter()
+    {
+        while (true)
+        {
+            if (Time.timeScale == 1)
             {
-                break;
+                if (isSpawnEnemy)
+                {
+                    StartCoroutine("SpawnEnemy");
+                }
+                else if (isBossPhase)
+                {
+                    StartCoroutine("BossPhase");
+                }
+                else if (isSpawnBoss)
+                {
+                    StartCoroutine("SpawnBoss");
+                }
+
+                StopCoroutine("Shelter");
             }
         }
     }

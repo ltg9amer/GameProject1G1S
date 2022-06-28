@@ -17,7 +17,7 @@ public class StageSelectScene : MonoBehaviour
             {
                 textStage.text = $"Stage {playerMove.ListCnt}";
 
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space) && !(Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)) && !(Time.timeScale == 0))
                 {
                     PlayerPrefs.SetInt("StageNumber", playerMove.ListCnt);
                     SceneManager.LoadScene("PlayScene");
@@ -25,7 +25,7 @@ public class StageSelectScene : MonoBehaviour
             }
             else
             {
-                if (Input.GetKey(KeyCode.Space))
+                if (Input.GetKey(KeyCode.Space) && !(Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)) && !(Time.timeScale == 0))
                 {
                     textStage.text = "Locked Stage";
                 }
@@ -39,7 +39,7 @@ public class StageSelectScene : MonoBehaviour
         {
             textStage.text = "Back";
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !(Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)) && !(Time.timeScale == 0))
             {
                 SceneManager.LoadScene("IntroScene");
             }
