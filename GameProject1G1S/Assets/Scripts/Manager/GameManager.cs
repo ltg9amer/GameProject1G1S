@@ -10,11 +10,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] private StageData stageData;
-    [SerializeField] private StagePooler enemyPooler;
-    [SerializeField] private StagePooler bossPooler;
     [SerializeField] private TilemapRenderer tilemap;
     [SerializeField] private TextMeshProUGUI textLeftEnemy;
     [SerializeField] private TextMeshProUGUI textScore;
+    [SerializeField] private StagePooler enemyPooler;
+    [SerializeField] private StagePooler bossPooler;
     [SerializeField] private List<GameObject> stageList = new List<GameObject>();
     private Vector2 spawnPosition;
     private PlayerHP playerHP;
@@ -27,9 +27,9 @@ public class GameManager : MonoBehaviour
     private int currentSpawnBoss;
     private int currentDeadBoss;
     private int maxSpawnBoss;
+    private int bossPhaseCount;
     private int score;
     private float spawnDelay;
-    private float phaseChangeDelay;
     private bool spawnPositionSelector;
     private bool isSpawnEnemy;
     private bool isBossPhase;
@@ -65,7 +65,11 @@ public class GameManager : MonoBehaviour
     public int Score
     {
         get { return score; }
-        set { score = value; }
+        set
+        {
+            score = value;
+            AudioManager.Instance.PlayPop();
+        }
     }
 
     private void Awake()
@@ -74,8 +78,6 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-
-        AudioManager.Instance.PlayImpulse();
 
         stageNumber = PlayerPrefs.GetInt("StageNumber", 1);
         stageOpened = PlayerPrefs.GetInt("StageOpened", 1);
@@ -88,6 +90,7 @@ public class GameManager : MonoBehaviour
         maxSpawnEnemy = stageNumber * 100;
         maxSpawnBoss = stageNumber * 50;
         score = 0;
+        bossPhaseCount = 0;
 
         if (stageNumber != 10)
         {
@@ -98,8 +101,18 @@ public class GameManager : MonoBehaviour
             spawnDelay = 0.1f;
         }
 
-        phaseChangeDelay = 1f;
-        StartCoroutine("SpawnEnemy");
+        if (!DeveloperCode.Instance.PhaseSkip)
+        {
+            StartCoroutine("SpawnEnemy");
+        }
+        else
+        {
+            currentSpawnEnemy = 0;
+            currentDeadEnemy = maxSpawnEnemy;
+            DeveloperCode.Instance.PhaseSkip = false;
+
+            StartCoroutine("BossPhase");
+        }
     }
 
     private void Update()
@@ -109,7 +122,7 @@ public class GameManager : MonoBehaviour
             textLeftEnemy.text = $"Left Enemy: {maxSpawnEnemy - currentDeadEnemy}";
         }
 
-        if (currentDeadBoss < maxSpawnBoss && isBossPhase == true)
+        if (currentDeadBoss < maxSpawnBoss && isSpawnBoss == true)
         {
             textLeftEnemy.text = $"Left Boss: {maxSpawnBoss - currentDeadBoss}";
         }
@@ -162,12 +175,18 @@ public class GameManager : MonoBehaviour
     {
         isSpawnEnemy = true;
 
+        if (!AudioManager.Instance.IsPlayImpulse)
+        {
+            AudioManager.Instance.PlayImpulse();
+        }
+
         while (true)
         {
-            if (Time.timeScale == 0)
+            if (DeveloperCode.Instance.PhaseSkip)
             {
-                StartCoroutine("Shelter");
-                StopCoroutine("SpawnEnemy");
+                currentSpawnEnemy = 0;
+                currentDeadEnemy = maxSpawnEnemy;
+                break;
             }
 
             if (currentSpawnEnemy >= maxSpawnEnemy)
@@ -195,7 +214,9 @@ public class GameManager : MonoBehaviour
 
         while (true)
         {
-            if (currentDeadEnemy == maxSpawnEnemy)
+            yield return null;
+
+            if (currentDeadEnemy >= maxSpawnEnemy)
             {
                 isSpawnEnemy = false;
                 StartCoroutine("BossPhase");
@@ -208,27 +229,26 @@ public class GameManager : MonoBehaviour
     {
         isBossPhase = true;
 
+        if (!AudioManager.Instance.IsPlaySiren)
+        {
+            AudioManager.Instance.PlaySiren();
+        }
+
         while (true)
         {
-            if (Time.timeScale == 0)
-            {
-                StartCoroutine("Shelter");
-                StopCoroutine("BossPhase");
-            }
-
             tilemap.sortingOrder = 0;
             textLeftEnemy.text = $"Left Boss: {maxSpawnBoss - currentDeadBoss}";
 
-            yield return new WaitForSeconds(phaseChangeDelay);
+            yield return new WaitForSeconds(1);
 
-            if (phaseChangeDelay > 0)
-            {
-                tilemap.sortingOrder = 1;
-                textLeftEnemy.text = "Left Enemy: 0";
-                yield return new WaitForSeconds(phaseChangeDelay);
-                phaseChangeDelay -= 0.1f;
-            }
-            else
+            tilemap.sortingOrder = 1;
+            textLeftEnemy.text = "Left Enemy: 0";
+
+            yield return new WaitForSeconds(1);
+
+            bossPhaseCount++;
+
+            if (bossPhaseCount >= 6)
             {
                 isBossPhase = false;
                 StartCoroutine("SpawnBoss");
@@ -239,18 +259,15 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SpawnBoss()
     {
-        AudioManager.Instance.PlayMetropolis();
-
         isSpawnBoss = true;
+
+        if (!AudioManager.Instance.IsPlayMetropolis)
+        {
+            AudioManager.Instance.PlayMetropolis();
+        }
 
         while (true)
         {
-            if (Time.timeScale == 0)
-            {
-                StartCoroutine("Shelter");
-                StopCoroutine("SpawnBoss");
-            }
-
             if (currentSpawnBoss >= maxSpawnBoss)
             {
                 isSpawnBoss = false;
@@ -273,30 +290,6 @@ public class GameManager : MonoBehaviour
             bossPooler.SpawnObject(spawnPosition, Quaternion.identity);
 
             yield return new WaitForSeconds(spawnDelay);
-        }
-    }
-
-    IEnumerator Shelter()
-    {
-        while (true)
-        {
-            if (Time.timeScale == 1)
-            {
-                if (isSpawnEnemy)
-                {
-                    StartCoroutine("SpawnEnemy");
-                }
-                else if (isBossPhase)
-                {
-                    StartCoroutine("BossPhase");
-                }
-                else if (isSpawnBoss)
-                {
-                    StartCoroutine("SpawnBoss");
-                }
-
-                StopCoroutine("Shelter");
-            }
         }
     }
 }

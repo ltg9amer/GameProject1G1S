@@ -25,6 +25,7 @@ public class PlayerShooting : MonoBehaviour
         {
             GameObject bullet = bulletPooler.SpawnObject(transform.position, transform.rotation);
             bullet.GetComponent<Bullet>().MoveDirection = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0) - bullet.transform.position;
+
             yield return new WaitForSeconds(shootingDelay);
         }
     }

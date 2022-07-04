@@ -11,7 +11,7 @@ public class IntroScene : MonoBehaviour
 
     private void Awake()
     {
-        if (!AudioManager.Instance.IsPlay)
+        if (!AudioManager.Instance.IsPlayNeon)
         {
             AudioManager.Instance.PlayNeon();
         }
