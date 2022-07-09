@@ -114,6 +114,11 @@ public class DeveloperCode : MonoBehaviour
 #endif
         }
 
+        if (codeReaderArray[0] == "reset" && codeReaderArray.Length == 1)
+        {
+            PlayerPrefs.DeleteAll();
+        }
+
         if ((codeReaderArray[0] == "이태곤" || codeReaderArray[0] == "박현서" || codeReaderArray[0] == "경동엽" || codeReaderArray[0] == "문현웅" || codeReaderArray[0] == "박현욱" || codeReaderArray[0] == "오지홍" || codeReaderArray[0] == "이도윤" || codeReaderArray[0] == "이준이" || codeReaderArray[0] == "홍인기") && codeReaderArray.Length == 1)
         { 
             if (!GameManager.Instance)

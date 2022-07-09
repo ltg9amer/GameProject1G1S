@@ -26,24 +26,22 @@ public class PlayerHP : MonoBehaviour
 
         if (currentHP != maxHP - maxHP * (float)damage / maxHP)
         {
-            if (playerMove.ListCnt == playerMove.PositionList.Count - 1)
+            for (int i = 1; i <= damage; i++)
             {
-                playerMove.ListCnt -= damage;
+                if (playerMove.ListCnt == playerMove.PositionList.Count - i)
+                {
+                    playerMove.ListCnt -= damage - (i - 1);
+                }
             }
 
-            for (int i = 0; i < damage; i++)
+            for (int i = 1; i <= damage; i++)
             {
                 playerMove.PositionList.RemoveAt(playerMove.PositionList.Count - 1);
             }
         }
         else
         {
-            if (stageDrawer.Vertex == 2)
-            {
-                playerMove.PositionList.RemoveAt(playerMove.PositionList.Count - 1);
-            }
-
-            for (int i = 1; i <= (stageDrawer.Vertex != 2 ? Mathf.Ceil((float)stageDrawer.Vertex / 2 - 1) : 0); i++)
+            for (int i = 1; i <= Mathf.Ceil((float)stageDrawer.Vertex / 2 - 1); i++)
             {
                 if (playerMove.ListCnt == i)
                 {
@@ -52,6 +50,22 @@ public class PlayerHP : MonoBehaviour
                 else if (playerMove.ListCnt == playerMove.PositionList.Count - i)
                 {
                     playerMove.ListCnt = i;
+                }
+            }
+
+            if (damage > 1)
+            {
+                for (int i = 1; i < damage; i++)
+                {
+                    if (playerMove.ListCnt == playerMove.PositionList.Count - i)
+                    {
+                        playerMove.ListCnt -= damage - i;
+                    }
+                }
+
+                for (int i = 1; i < damage; i++)
+                {
+                    playerMove.PositionList.RemoveAt(playerMove.PositionList.Count - 1);
                 }
             }
         }

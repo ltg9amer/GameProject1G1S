@@ -87,8 +87,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        maxSpawnEnemy = stageNumber * 100;
-        maxSpawnBoss = stageNumber * 50;
+        maxSpawnEnemy = stageNumber * (stageNumber == 10 ? 150 : 50);
+        maxSpawnBoss = stageNumber * (stageNumber == 10 ? 75 : 25);
         score = 0;
         bossPhaseCount = 0;
 
@@ -186,6 +186,7 @@ public class GameManager : MonoBehaviour
             {
                 currentSpawnEnemy = 0;
                 currentDeadEnemy = maxSpawnEnemy;
+                DeveloperCode.Instance.PhaseSkip = false;
                 break;
             }
 
