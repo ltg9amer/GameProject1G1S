@@ -13,7 +13,10 @@ public class ClearScene : MonoBehaviour
 
     private void Awake()
     {
-        AudioManager.Instance.PlayNeon();
+        AudioManager.Instance.IsPlayMetropolis = false;
+        AudioManager.Instance.Metropolis.Stop();
+        AudioManager.Instance.IsPlayNeon = true;
+        AudioManager.Instance.Neon.Play();
     }
 
     private void Update()

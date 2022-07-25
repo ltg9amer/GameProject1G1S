@@ -13,7 +13,8 @@ public class IntroScene : MonoBehaviour
     {
         if (!AudioManager.Instance.IsPlayNeon)
         {
-            AudioManager.Instance.PlayNeon();
+            AudioManager.Instance.IsPlayNeon = true;
+            AudioManager.Instance.Neon.Play();
         }
     }
 

@@ -44,9 +44,23 @@ public class DeveloperCode : MonoBehaviour
     {
         if (((Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Space)) || (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKey(KeyCode.Space)) || (Input.GetKeyDown(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.Space))) && !isOpened)
         {
+            if (AudioManager.Instance.IsPlayImpulse)
+            {
+                AudioManager.Instance.Impulse.Pause();
+            }
+            else if (AudioManager.Instance.IsPlayMetropolis)
+            {
+                AudioManager.Instance.Metropolis.Pause();
+            }
+            else if (AudioManager.Instance.IsPlaySiren)
+            {
+                AudioManager.Instance.Siren.Pause();
+            }
+
             if (!AudioManager.Instance.IsPlayNeon)
             {
-                AudioManager.Instance.PlayNeon();
+                AudioManager.Instance.IsPlayNeon = true;
+                AudioManager.Instance.Neon.Play();
             }
             
             isOpened = true;
@@ -56,6 +70,25 @@ public class DeveloperCode : MonoBehaviour
         }
         else if (((Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Space)) || (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKey(KeyCode.Space)) || (Input.GetKeyDown(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.Space))) && isOpened)
         {
+            if (AudioManager.Instance.IsPlayImpulse)
+            {
+                AudioManager.Instance.IsPlayNeon = false;
+                AudioManager.Instance.Neon.Stop();
+                AudioManager.Instance.Impulse.UnPause();
+            }
+            else if (AudioManager.Instance.IsPlayMetropolis)
+            {
+                AudioManager.Instance.IsPlayNeon = false;
+                AudioManager.Instance.Neon.Stop();
+                AudioManager.Instance.Metropolis.UnPause();
+            }
+            else if (AudioManager.Instance.IsPlaySiren)
+            {
+                AudioManager.Instance.IsPlayNeon = false;
+                AudioManager.Instance.Neon.Stop();
+                AudioManager.Instance.Siren.UnPause();
+            }
+
             isOpened = false;
             inputDeveloperCode.GetComponent<RectTransform>().DOAnchorPosY(60, 1f).SetUpdate(true);
             Time.timeScale = 1.0f;
@@ -125,6 +158,25 @@ public class DeveloperCode : MonoBehaviour
             {
                 SceneManager.LoadScene("CreditScene");
             }
+        }
+
+        if (AudioManager.Instance.IsPlayImpulse)
+        {
+            AudioManager.Instance.IsPlayNeon = false;
+            AudioManager.Instance.Neon.Stop();
+            AudioManager.Instance.Impulse.UnPause();
+        }
+        else if (AudioManager.Instance.IsPlayMetropolis)
+        {
+            AudioManager.Instance.IsPlayNeon = false;
+            AudioManager.Instance.Neon.Stop();
+            AudioManager.Instance.Metropolis.UnPause();
+        }
+        else if (AudioManager.Instance.IsPlaySiren)
+        {
+            AudioManager.Instance.IsPlayNeon = false;
+            AudioManager.Instance.Neon.Stop();
+            AudioManager.Instance.Siren.UnPause();
         }
 
         inputDeveloperCode.text = "";

@@ -12,7 +12,24 @@ public class GameOverScene : MonoBehaviour
 
     private void Awake()
     {
-        AudioManager.Instance.PlayNeon();
+        if (AudioManager.Instance.IsPlayImpulse)
+        {
+            AudioManager.Instance.IsPlayImpulse = false;
+            AudioManager.Instance.Impulse.Stop();
+        }
+        else if (AudioManager.Instance.IsPlaySiren)
+        {
+            AudioManager.Instance.IsPlaySiren = false;
+            AudioManager.Instance.Siren.Stop();
+        }
+        else if (AudioManager.Instance.IsPlayMetropolis)
+        {
+            AudioManager.Instance.IsPlayMetropolis = false;
+            AudioManager.Instance.Metropolis.Stop();
+        }
+
+        AudioManager.Instance.IsPlayNeon = true;
+        AudioManager.Instance.Neon.Play();
     }
 
     private void Update()

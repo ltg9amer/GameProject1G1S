@@ -17,10 +17,51 @@ public class AudioManager : MonoBehaviour
     private bool isPlayNeon;
     private bool isPlaySiren;
 
-    public bool IsPlayImpulse => isPlayImpulse;
-    public bool IsPlayMetropolis => isPlayMetropolis;
-    public bool IsPlayNeon => isPlayNeon;
-    public bool IsPlaySiren => isPlaySiren;
+    public AudioSource Impulse
+    {
+        get { return impulse; }
+        set { impulse = value; }
+    }
+    public AudioSource Metropolis
+    {
+        get { return metropolis; }
+        set { metropolis = value; }
+    }
+    public AudioSource Neon
+    {
+        get { return neon; }
+        set { neon = value; }
+    }
+    public AudioSource Siren
+    {
+        get { return siren; }
+        set { siren = value; }
+    }
+    public AudioSource Pop
+    {
+        get { return pop; }
+        set { pop = value; }
+    }
+    public bool IsPlayImpulse
+    {
+        get { return isPlayImpulse; }
+        set { isPlayImpulse = value; }
+    }
+    public bool IsPlayMetropolis
+    {
+        get { return isPlayMetropolis; }
+        set { isPlayMetropolis = value; }
+    }
+    public bool IsPlayNeon
+    {
+        get { return isPlayNeon; }
+        set { isPlayNeon = value; }
+    }
+    public bool IsPlaySiren
+    {
+        get { return isPlaySiren; }
+        set { isPlaySiren = value; }
+    }
 
     private void Awake()
     {
@@ -44,53 +85,5 @@ public class AudioManager : MonoBehaviour
         neon.volume = PlayerPrefs.GetFloat("BGMVolume", 1);
         siren.volume = PlayerPrefs.GetFloat("SFXVolume", 1);
         pop.volume = PlayerPrefs.GetFloat("SFXVolume", 1);
-    }
-
-    public void PlayImpulse()
-    {
-        isPlayMetropolis = false;
-        isPlayNeon = false;
-        isPlaySiren = false;
-        isPlayImpulse = true;
-        neon.Stop();
-        impulse.Play();
-    }
-
-    public void PlayMetropolis()
-    {
-        isPlayImpulse = false;
-        isPlayNeon = false;
-        isPlaySiren = false;
-        isPlayMetropolis = true;
-        siren.Stop();
-        metropolis.Play();
-    }
-
-    public void PlayNeon()
-    {
-        isPlayImpulse = false;
-        isPlayMetropolis = false;
-        isPlaySiren = false;
-        isPlayNeon = true;
-        impulse.Stop();
-        metropolis.Stop();
-        siren.Stop();
-        neon.Play();
-    }
-
-    public void PlaySiren()
-    {
-        isPlayImpulse = false;
-        isPlayMetropolis = false;
-        isPlayNeon = false;
-        isPlaySiren = true;
-        impulse.Stop();
-        neon.Stop();
-        siren.Play();
-    }
-
-    public void PlayPop()
-    {
-        pop.Play();
     }
 }

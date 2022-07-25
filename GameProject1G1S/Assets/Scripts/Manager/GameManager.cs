@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
     private float spawnDelay;
     private bool spawnPositionSelector;
     private bool isSpawnEnemy;
-    private bool isBossPhase;
     private bool isSpawnBoss;
 
     public int StageNumber
@@ -68,7 +67,7 @@ public class GameManager : MonoBehaviour
         set
         {
             score = value;
-            AudioManager.Instance.PlayPop();
+            AudioManager.Instance.Pop.Play();
         }
     }
 
@@ -103,21 +102,25 @@ public class GameManager : MonoBehaviour
 
         if (!DeveloperCode.Instance.PhaseSkip)
         {
+            AudioManager.Instance.IsPlayNeon = false;
+            AudioManager.Instance.Neon.Stop();
             StartCoroutine("SpawnEnemy");
         }
         else
         {
             currentSpawnEnemy = 0;
             currentDeadEnemy = maxSpawnEnemy;
-            DeveloperCode.Instance.PhaseSkip = false;
 
+            AudioManager.Instance.IsPlayNeon = false;
+            AudioManager.Instance.Neon.Stop();
+            DeveloperCode.Instance.PhaseSkip = false;
             StartCoroutine("BossPhase");
         }
     }
 
     private void Update()
     {
-        if (currentDeadEnemy < maxSpawnEnemy)
+        if (currentDeadEnemy < maxSpawnEnemy && isSpawnEnemy == true)
         {
             textLeftEnemy.text = $"Left Enemy: {maxSpawnEnemy - currentDeadEnemy}";
         }
@@ -175,10 +178,8 @@ public class GameManager : MonoBehaviour
     {
         isSpawnEnemy = true;
 
-        if (!AudioManager.Instance.IsPlayImpulse)
-        {
-            AudioManager.Instance.PlayImpulse();
-        }
+        AudioManager.Instance.IsPlayImpulse = true;
+        AudioManager.Instance.Impulse.Play();
 
         while (true)
         {
@@ -186,6 +187,8 @@ public class GameManager : MonoBehaviour
             {
                 currentSpawnEnemy = 0;
                 currentDeadEnemy = maxSpawnEnemy;
+                AudioManager.Instance.IsPlayImpulse = false;
+                AudioManager.Instance.Impulse.Stop();
                 DeveloperCode.Instance.PhaseSkip = false;
                 break;
             }
@@ -220,6 +223,9 @@ public class GameManager : MonoBehaviour
             if (currentDeadEnemy >= maxSpawnEnemy)
             {
                 isSpawnEnemy = false;
+
+                AudioManager.Instance.IsPlayImpulse = false;
+                AudioManager.Instance.Impulse.Stop();
                 StartCoroutine("BossPhase");
                 StopCoroutine("SpawnEnemy");
             }
@@ -228,12 +234,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator BossPhase()
     {
-        isBossPhase = true;
-
-        if (!AudioManager.Instance.IsPlaySiren)
-        {
-            AudioManager.Instance.PlaySiren();
-        }
+        AudioManager.Instance.IsPlaySiren = true;
+        AudioManager.Instance.Siren.Play();
 
         while (true)
         {
@@ -251,7 +253,8 @@ public class GameManager : MonoBehaviour
 
             if (bossPhaseCount >= 6)
             {
-                isBossPhase = false;
+                AudioManager.Instance.IsPlaySiren = false;
+                AudioManager.Instance.Siren.Stop();
                 StartCoroutine("SpawnBoss");
                 StopCoroutine("BossPhase");
             }
@@ -262,16 +265,15 @@ public class GameManager : MonoBehaviour
     {
         isSpawnBoss = true;
 
-        if (!AudioManager.Instance.IsPlayMetropolis)
-        {
-            AudioManager.Instance.PlayMetropolis();
-        }
+        AudioManager.Instance.IsPlayMetropolis = true;
+        AudioManager.Instance.Metropolis.Play();
 
         while (true)
         {
             if (currentSpawnBoss >= maxSpawnBoss)
             {
                 isSpawnBoss = false;
+
                 StopCoroutine("SpawnBoss");
             }
 
